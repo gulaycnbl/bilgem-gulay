@@ -6,12 +6,12 @@
 
 #IncludeRegexTransform: 
 
-/home/admin/Genel/CLionProjects/gulay_task1/main.cpp
-stdio.h
+/home/admin/Belgeler/GitHub/bilgem-gulay/gulay_task1/main.cpp
+cstdio
 -
 cassert
 -
-stdlib.h
+cstdlib
 -
 cstring
 -

@@ -1,4 +1,4 @@
-# Install script for directory: /home/admin/Genel/CLionProjects/gulay_task1
+# Install script for directory: /home/admin/Belgeler/GitHub/bilgem-gulay/gulay_task1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/admin/Genel/CLionProjects/gulay_task1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/admin/Belgeler/GitHub/bilgem-gulay/gulay_task1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

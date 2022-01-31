@@ -1,6 +1,6 @@
-#include <stdio.h>
+#include <cstdio>
 #include <cassert>
-#include <stdlib.h>
+#include <cstdlib>
 #include <cstring>
 
 #define PRG1 "bchfvs dfcbhsdjfbsı bcdfızvbdı gvdbkbdn ngvffdıogn ngvkjxgbdkf rfg hı huı hukhgkdfhkgxdhn hjodghıdlxş gfhıoufhgodgtrh ghbr"
