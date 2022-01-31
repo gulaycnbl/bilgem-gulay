@@ -10,18 +10,19 @@
 #define PRG5 "When the stars threw down their spears And water'd heaven with their tears: Did he smile his work to see?Did he who made the Lamb make thee?"
 #define PRG6 "Tyger Tyger burning bright, In the forests of the night: What immortal hand or eye,Dare frame thy fearful symmetry?"
 
-#define FILEPATH "/home/admin/Genel/CLionProjects/gulay_task1/lorem.txt"
+#define FILENAME "lorem.txt"
 #define MAXLEN 350
 #define NUMOFLINES 5
 
 char **lines_to_check = (char **)malloc(NUMOFLINES*sizeof(char*));
-/*const char * myarray[]{
+const char * myarray[]{
     PRG1,
     PRG2,
     PRG3,
     PRG4,
+    PRG5,
+    PRG6,
 };
-*/ //can also be used as lines_to_check
 
 void assignLines(){
     for(int i=0; i<NUMOFLINES; i++){
@@ -41,7 +42,7 @@ void freeLines(char **lines){
 int main() {
     char buffer[MAXLEN];
     FILE *fp;
-    fp = fopen(FILEPATH, "r");
+    fp = fopen(FILENAME, "r");
     if(fp == nullptr){
         perror("Cannot open file!");
         return(-1);
