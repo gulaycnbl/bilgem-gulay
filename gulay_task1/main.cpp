@@ -13,7 +13,7 @@
 #define FILENAME "lorem.txt"
 #define MAXLEN 350
 
-const char * myarray[]{
+const char * arrayForAssert[]{
     PRG1,
     PRG2,
     PRG3,
@@ -39,7 +39,7 @@ int main() {
         if(buffer[0] == '#' || buffer[0] == '\n'){
             continue;
         } else{
-            assert(strcmp(myarray[count_for_assert], buffer));
+            assert(strcmp(arrayForAssert[count_for_assert], buffer));
             count_for_assert++;
             printf("Paragraph in line %d: ", count);
             puts(buffer);
