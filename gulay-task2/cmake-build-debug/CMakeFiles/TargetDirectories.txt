@@ -1,0 +1,3 @@
+/home/admin/Genel/CLionProjects/gulay-task2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/admin/Genel/CLionProjects/gulay-task2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/admin/Genel/CLionProjects/gulay-task2/cmake-build-debug/CMakeFiles/gulay_task2.dir
