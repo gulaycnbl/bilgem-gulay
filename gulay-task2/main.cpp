@@ -21,6 +21,7 @@ char prg4[] = "What the hammer? what the chain, In what furnace was thy brain?Wh
 //int lineCount = 0;
 int lastIndex = 0;
 int maxIndex = 0;
+int lastStrLen = 0;
 
 /*
 void writeToSpecificLine(FILE *fp, int line, char *str){
@@ -34,14 +35,18 @@ void writeToSpecificLine(FILE *fp, int line, char *str){
 }
  */
 
+//Function to write given paragraph 'str' into given index in the file fp
+//by inserting meaningless arbitrary letters between the paragraphs
 void writeToSpecificIndex(FILE *fp, int index, char *str){
     if(index>maxIndex){
         maxIndex = index;
-        for(int i = 0; i < index-lastIndex; i++){
-            char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[random () % 26];
+        for(int i = 0; i < index-lastIndex-lastStrLen; i++){
+            //26 (alphabet) + 4 space character to increase the possibility of space
+            char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[random () % 30];
             fprintf(fp, "%c", randomletter);
         }
     }
+    lastStrLen = strlen(str);
     lastIndex = index;
     fseek(fp, index, SEEK_SET);
     fprintf(fp, "%s", str);
@@ -70,6 +75,7 @@ void readTheParagraphs(){
 
     char buffer[MAXLEN];
     char copybuf[MAXLEN];
+    memset(copybuf, '0', MAXLEN*sizeof(char));
     int lenPrg1 = strlen(prg1);
     int lenPrg2 = strlen(prg2);
     int lenPrg3 = sizeof(prg3)/sizeof(char);
