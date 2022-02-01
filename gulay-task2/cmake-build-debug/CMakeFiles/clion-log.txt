@@ -1,4 +1,4 @@
-/opt/clion-2021.2.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/admin/Genel/CLionProjects/gulay-task2
+/opt/clion-2021.2.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/admin/Belgeler/GitHub/bilgem-gulay/gulay-task2
 -- The C compiler identification is GNU 10.3.0
 -- The CXX compiler identification is GNU 10.3.0
 -- Detecting C compiler ABI info
@@ -13,4 +13,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/admin/Genel/CLionProjects/gulay-task2/cmake-build-debug
+-- Build files have been written to: /home/admin/Belgeler/GitHub/bilgem-gulay/gulay-task2/cmake-build-debug
