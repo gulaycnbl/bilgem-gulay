@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/admin/Belgeler/GitHub/bilgem-gulay/gulay_task1/main.cpp
+/home/admin/Genel/CLionProjects/gulay-task2/main.cpp
 cstdio
 -
 cassert

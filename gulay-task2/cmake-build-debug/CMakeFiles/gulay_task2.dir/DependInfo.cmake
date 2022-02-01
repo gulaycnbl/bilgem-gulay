@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/admin/Belgeler/GitHub/bilgem-gulay/gulay_task1/main.cpp" "/home/admin/Belgeler/GitHub/bilgem-gulay/gulay_task1/cmake-build-debug/CMakeFiles/gulay_task1.dir/main.cpp.o"
+  "/home/admin/Genel/CLionProjects/gulay-task2/main.cpp" "/home/admin/Genel/CLionProjects/gulay-task2/cmake-build-debug/CMakeFiles/gulay_task2.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
