@@ -82,7 +82,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/admin/Belgeler/GitHub/bilgem-gulay/gulay-task2/main.cpp">
+		<Unit filename="/home/admin/Belgeler/GitHub/bilgem-gulay/gulay-task2/main.c">
 			<Option target="gulay_task2"/>
 		</Unit>
 		<Unit filename="/home/admin/Belgeler/GitHub/bilgem-gulay/gulay-task2/CMakeLists.txt">

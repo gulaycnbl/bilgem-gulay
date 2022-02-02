@@ -3,4 +3,4 @@ project(gulay_task2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(gulay_task2 main.cpp)
+add_executable(gulay_task2 main.c)

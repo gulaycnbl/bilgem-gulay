@@ -129,29 +129,29 @@ gulay_task2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gulay_task2.dir/build.make CMakeFiles/gulay_task2.dir/build
 .PHONY : gulay_task2/fast
 
-main.o: main.cpp.o
+main.o: main.c.o
 .PHONY : main.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gulay_task2.dir/build.make CMakeFiles/gulay_task2.dir/main.cpp.o
-.PHONY : main.cpp.o
+main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gulay_task2.dir/build.make CMakeFiles/gulay_task2.dir/main.c.o
+.PHONY : main.c.o
 
-main.i: main.cpp.i
+main.i: main.c.i
 .PHONY : main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gulay_task2.dir/build.make CMakeFiles/gulay_task2.dir/main.cpp.i
-.PHONY : main.cpp.i
+main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gulay_task2.dir/build.make CMakeFiles/gulay_task2.dir/main.c.i
+.PHONY : main.c.i
 
-main.s: main.cpp.s
+main.s: main.c.s
 .PHONY : main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gulay_task2.dir/build.make CMakeFiles/gulay_task2.dir/main.cpp.s
-.PHONY : main.cpp.s
+main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gulay_task2.dir/build.make CMakeFiles/gulay_task2.dir/main.c.s
+.PHONY : main.c.s
 
 # Help Target
 help:

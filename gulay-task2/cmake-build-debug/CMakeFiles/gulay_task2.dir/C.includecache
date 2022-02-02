@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/admin/Belgeler/GitHub/bilgem-gulay/gulay-task2/main.c
+stdio.h
+-
+assert.h
+-
+stdlib.h
+-
+string.h
+-
+

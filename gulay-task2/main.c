@@ -1,14 +1,7 @@
-#include <cstdio>
-#include <cassert>
-#include <cstdlib>
-#include <cstring>
-
-//#define PRG1 "Tyger Tyger, burning bright, In the forests of the night; What immortal hand or eye, Could frame thy fearful symmetry?"
-//#define PRG2 "In what distant deeps or skies. Burnt the fire of thine eyes?On what wings dare he aspire?What the hand, dare seize the fire?"
-//#define PRG3 "And what shoulder, & what art,Could twist the sinews of thy heart?And when thy heart began to beat,What dread hand? & what dread feet?"
-//#define PRG4 "What the hammer? what the chain, In what furnace was thy brain?What the anvil? what dread grasp, Dare its deadly terrors clasp!"
-//#define PRG5 "When the stars threw down their spears And water'd heaven with their tears: Did he smile his work to see?Did he who made the Lamb make thee?"
-//#define PRG6 "Tyger Tyger burning bright, In the forests of the night: What immortal hand or eye,Dare frame thy fearful symmetry?"
+﻿#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define FILENAME "newFile.txt"
 //#define MAXLEN 350
@@ -17,6 +10,8 @@ char prg1[] = "Tyger Tyger, burning bright, In the forests of the night; What im
 char prg2[] = "In what distant deeps or skies. Burnt the fire of thine eyes?On what wings dare he aspire?What the hand, dare seize the fire?";
 char prg3[] = "And what shoulder, & what art,Could twist the sinews of thy heart?And when thy heart began to beat,What dread hand? & what dread feet?";
 char prg4[] = "What the hammer? what the chain, In what furnace was thy brain?What the anvil? what dread grasp, Dare its deadly terrors clasp!";
+//char prg5[] = "When the stars threw down their spears And water'd heaven with their tears: Did he smile his work to see?Did he who made the Lamb make thee?";
+//char prg6[] = "Tyger Tyger burning bright, In the forests of the night: What immortal hand or eye,Dare frame thy fearful symmetry?";
 
 //int lineCount = 0;
 int lastIndex = 0;
@@ -54,7 +49,7 @@ void writeToSpecificIndex(FILE *fp, int index, char *str){
 
 void customWriteToNewFile(){
     FILE *fp= fopen(FILENAME, "w+");
-    if(fp == nullptr){
+    if(fp == NULL){
         perror("Cannot open file to write!");
     }
     writeToSpecificIndex(fp, 0, prg1);
@@ -69,21 +64,17 @@ void customWriteToNewFile(){
 void readAndAssertWithIndex(FILE *fp, char prg[], int index){
     unsigned long lenPrg = strlen(prg);
     char buffer[lenPrg+1];
-    char copybuf[lenPrg+1];
-    memset(copybuf, '0', lenPrg*sizeof(char));
 
     fseek(fp, index, SEEK_SET);
     fgets(buffer, sizeof(buffer), fp);
-    strncpy(copybuf, buffer, lenPrg+1);
-    //assert(strcmp(prg, copybuf));
-    printf("%s\n", copybuf);
-    printf("%s\n", prg);
+    assert(!strcmp(prg, buffer)); //strcmp gives 0 (false) if the strings are equal
+    printf("%s\n", buffer);
 }
 
 void readTheParagraphs(){
     FILE *fp;
     fp = fopen(FILENAME, "r+");
-    if(fp == nullptr){
+    if(fp == NULL){
         perror("Cannot open file to read!");
     }
 

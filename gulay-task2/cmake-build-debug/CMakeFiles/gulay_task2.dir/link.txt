@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/gulay_task2.dir/main.cpp.o -o gulay_task2 
+/usr/bin/cc -g CMakeFiles/gulay_task2.dir/main.c.o -o gulay_task2 
