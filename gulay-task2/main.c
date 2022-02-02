@@ -3,15 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FILENAME "newFile.txt"
+#define FILENAME "lorem.txt"
 //#define MAXLEN 350
 
 char prg1[] = "Tyger Tyger, burning bright, In the forests of the night; What immortal hand or eye, Could frame thy fearful symmetry?";
 char prg2[] = "In what distant deeps or skies. Burnt the fire of thine eyes?On what wings dare he aspire?What the hand, dare seize the fire?";
 char prg3[] = "And what shoulder, & what art,Could twist the sinews of thy heart?And when thy heart began to beat,What dread hand? & what dread feet?";
 char prg4[] = "What the hammer? what the chain, In what furnace was thy brain?What the anvil? what dread grasp, Dare its deadly terrors clasp!";
-//char prg5[] = "When the stars threw down their spears And water'd heaven with their tears: Did he smile his work to see?Did he who made the Lamb make thee?";
-//char prg6[] = "Tyger Tyger burning bright, In the forests of the night: What immortal hand or eye,Dare frame thy fearful symmetry?";
 
 //int lineCount = 0;
 int lastIndex = 0;
@@ -19,6 +17,7 @@ int maxIndex = 0;
 unsigned long lastStrLen = 0;
 
 /*
+//Function to write given paragraph 'str' into given line in the file fp
 void writeToSpecificLine(FILE *fp, int line, char *str){
     //printf("%ld\n", ftell(fp));
     fseek(fp, 0, SEEK_END);
