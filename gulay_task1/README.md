@@ -20,3 +20,15 @@ Step by step guide for usage:
 - Add your defined paragraphs to arrayForAssert.
 
 That's it, it will test if your file is read correctly.
+
+
+# Demo
+
+## Code
+
+![task1_code](https://user-images.githubusercontent.com/60276129/152134780-331b5a7f-d5b5-4c46-9b30-451049971c31.gif)
+
+
+## Terminal
+
+![task1_terminal](https://user-images.githubusercontent.com/60276129/152134830-38228804-2d40-4192-a32e-cc2f9bb96218.gif)
