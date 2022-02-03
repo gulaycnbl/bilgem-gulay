@@ -2,6 +2,8 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
+#include <unistd.h>
 
 #define FILENAME "lorem.txt"
 
@@ -60,7 +62,30 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
     printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
 }
 
+void open_file(){
+    FILE *fp= fopen(FILENAME, "r+");
+    if(fp == NULL){
+        perror("Cannot open file to read!");
+    }
+}
+
+void *thread_func(){
+    /*pthread_once_t once_control = PTHREAD_ONCE_INIT;
+    pthread_once(&once_control, open_file);*/
+    FILE *fp= fopen(FILENAME, "r+");
+    if(fp == NULL){
+        perror("Cannot open file to read!");
+    }
+
+    read_and_assert_with_index(fp, prg1, 0);
+}
+
 int main() {
-    custom_write_to_new_file();
+    pthread_t tid;
+
+    pthread_create(&tid, NULL, thread_func, NULL);
+    pthread_create(&tid, NULL, thread_func, NULL);
+
+    pthread_exit(NULL);
     return 0;
 }
