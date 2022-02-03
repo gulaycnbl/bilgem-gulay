@@ -65,7 +65,8 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
 void open_file(){
     FILE *fp= fopen(FILENAME, "r+");
     if(fp == NULL){
-        perror("Cannot open file to read!");
+        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
+               "or run the custom_write_to_new_file() function once");
     }
 }
 
