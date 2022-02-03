@@ -1,6 +1,6 @@
-#include <cstdio>
-#include <cassert>
-#include <cstring>
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
 
 #define PRG1 "Tyger Tyger, burning bright, In the forests of the night; What immortal hand or eye, Could frame thy fearful symmetry?"
 #define PRG2 "In what distant deeps or skies. Burnt the fire of thine eyes?On what wings dare he aspire?What the hand, dare seize the fire?"
@@ -12,7 +12,7 @@
 #define FILENAME "lorem.txt"
 #define MAXLEN 350
 
-const char * arrayForAssert[]{
+const char * arrayForAssert[] = {
         PRG1,
         PRG2,
         PRG3,
@@ -25,7 +25,7 @@ int main() {
     char buffer[MAXLEN];
     FILE *fp;
     fp = fopen(FILENAME, "r");
-    if(fp == nullptr){
+    if(fp == NULL){
         perror("Cannot open file!");
         return(-1);
     }
@@ -33,15 +33,14 @@ int main() {
     int count = 0;
     int count_for_assert = 0;
 
-    while(fgets(buffer, sizeof(buffer), fp) != nullptr){
+    while(fgets(buffer, sizeof(buffer), fp) != NULL){
         count++;
         if(buffer[0] == '#' || buffer[0] == '\n'){
             continue;
         } else{
             assert(strcmp(arrayForAssert[count_for_assert], buffer));
+            printf("Content of the array index %d matches with the file content %s line %d \n", count_for_assert, FILENAME, count);
             count_for_assert++;
-            printf("Paragraph in line %d: ", count);
-            puts(buffer);
         }
     }
     fclose(fp);
