@@ -30,7 +30,6 @@ void writeToSpecificLine(FILE *fp, int line, char *str){
 
 void write_dummy_string_from_n_character(FILE *fp, int n){
     for(int i = 0; i < n; i++){
-        //26 (alphabet) + 4 space character to increase the probability of space
         char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[rand() % 30];
         fprintf(fp, "%c", randomletter);
     }
