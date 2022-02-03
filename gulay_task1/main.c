@@ -35,9 +35,7 @@ int main() {
 
     while(fgets(buffer, sizeof(buffer), fp) != NULL){
         count++;
-        if(buffer[0] == '#' || buffer[0] == '\n'){
-            continue;
-        } else{
+        if(buffer[0] != '#' && buffer[0] != '\n'){
             assert(strcmp(arrayForAssert[count_for_assert], buffer));
             printf("Content of the array index %d matches with the file content %s line %d \n", count_for_assert, FILENAME, count);
             count_for_assert++;
