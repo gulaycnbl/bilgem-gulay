@@ -13,20 +13,22 @@ char prg4[] = "4-What the hammer? what the chain, In what furnace was the brain?
 char prg5[] = "5-When the stars threw down their spears And water'd heaven with their tears, Did he smile his work to see? Did he who made the Lamb make thee?";
 char prg6[] = "6-Tyger Tyger burning bright, In the forests of the night, What immortal hand or eye,Dare frame the fearful symmetry?";
 
-int lastIndex = 0;
-int maxIndex = 0;
+long lastIndex = 0;
+long maxIndex = 0;
 unsigned long lastStrLen = 0;
 
-//Function to write given paragraph 'str' into given index in the file fp
-//by inserting meaningless arbitrary letters between the paragraphs
-void writeToSpecificIndex(FILE *fp, int index, char *str){
+void write_dummy_string_from_n_character(FILE *fp, unsigned long n){
+    for(int i = 0; i < n; i++){
+        char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[rand() % 30];
+        fprintf(fp, "%c", randomletter);
+    }
+}
+
+void write_to_file_index(FILE *fp, long index, char *str){
     if(index>maxIndex){
         maxIndex = index;
-        for(int i = 0; i < index-lastIndex-lastStrLen; i++){
-            //26 (alphabet) + 4 space character to increase the possibility of space
-            char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[random () % 30];
-            fprintf(fp, "%c", randomletter);
-        }
+        unsigned long dummyStrLen = index-lastIndex-lastStrLen;
+        write_dummy_string_from_n_character(fp, dummyStrLen);
     }
     lastStrLen = strlen(str);
     lastIndex = index;
@@ -34,50 +36,33 @@ void writeToSpecificIndex(FILE *fp, int index, char *str){
     fprintf(fp, "%s", str);
 }
 
-void customWriteToNewFile(){
+void custom_write_to_new_file(){
     FILE *fp= fopen(FILENAME, "w+");
     if(fp == NULL){
         perror("Cannot open file to write!");
     }
-    writeToSpecificIndex(fp, 0, prg1);
-    writeToSpecificIndex(fp, 1000, prg2);
-    writeToSpecificIndex(fp, 10000, prg3);
-    writeToSpecificIndex(fp, 1000000, prg4);
-    writeToSpecificIndex(fp, 100000000, prg5);
-    writeToSpecificIndex(fp, 10000000000, prg6);
+    write_to_file_index(fp, 0, prg1);
+    write_to_file_index(fp, 1000, prg2);
+    write_to_file_index(fp, 10000, prg3);
+    write_to_file_index(fp, 1000000, prg4);
+    write_to_file_index(fp, 100000000, prg5);
+    write_to_file_index(fp, 10000000000, prg6);
 
     fclose(fp);
 }
 
-void readAndAssertWithIndex(FILE *fp, char prg[], int index){
+void read_and_assert_with_index(FILE *fp, char prg[], long index){
     unsigned long lenPrg = strlen(prg);
     char buffer[lenPrg+1];
 
     fseek(fp, index, SEEK_SET);
     fgets(buffer, sizeof(buffer), fp);
-    assert(!strcmp(prg, buffer)); //strcmp gives 0 (false) if the strings are equal
-    printf("%s\n", buffer);
-}
-
-void readTheParagraphs(){
-    FILE *fp;
-    fp = fopen(FILENAME, "r+");
-    if(fp == NULL){
-        perror("Cannot open file to read!");
-    }
-
-    readAndAssertWithIndex(fp, prg1, 0);
-    readAndAssertWithIndex(fp, prg2, 1000);
-    readAndAssertWithIndex(fp, prg3, 10000);
-    readAndAssertWithIndex(fp, prg4, 1000000);
-    readAndAssertWithIndex(fp, prg5, 100000000);
-    readAndAssertWithIndex(fp, prg6, 10000000000);
-
-    fclose(fp);
+    assert(!strcmp(prg, buffer));
+    printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
 }
 
 int main() {
-    customWriteToNewFile();
+    //custom_write_to_new_file();
     FILE *fp;
     fp = fopen(FILENAME, "r+");
     if(fp == NULL){
@@ -86,13 +71,13 @@ int main() {
 
     //child process
     if(fork()==0){
-        readAndAssertWithIndex(fp, prg1, 0);
-        readAndAssertWithIndex(fp, prg3, 10000);
-        readAndAssertWithIndex(fp, prg5, 100000000);
+        read_and_assert_with_index(fp, prg1, 0);
+        read_and_assert_with_index(fp, prg3, 10000);
+        read_and_assert_with_index(fp, prg5, 100000000);
     }else{
-        readAndAssertWithIndex(fp, prg2, 1000);
-        readAndAssertWithIndex(fp, prg4, 1000000);
-        readAndAssertWithIndex(fp, prg6, 10000000000);
+        read_and_assert_with_index(fp, prg2, 1000);
+        read_and_assert_with_index(fp, prg4, 1000000);
+        read_and_assert_with_index(fp, prg6, 10000000000);
     }
 
     fclose(fp);
