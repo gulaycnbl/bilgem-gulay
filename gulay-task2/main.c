@@ -17,7 +17,6 @@ int maxIndex = 0;
 unsigned long lastStrLen = 0;
 
 /*
-//Function to write given paragraph 'str' into given line in the file fp
 void writeToSpecificLine(FILE *fp, int line, char *str){
     //printf("%ld\n", ftell(fp));
     fseek(fp, 0, SEEK_END);
@@ -29,16 +28,19 @@ void writeToSpecificLine(FILE *fp, int line, char *str){
 }
  */
 
-//Function to write given paragraph 'str' into given index in the file fp
-//by inserting meaningless arbitrary letters between the paragraphs
-void writeToSpecificIndex(FILE *fp, int index, char *str){
+void write_dummy_string_from_n_character(FILE *fp, int n){
+    for(int i = 0; i < n; i++){
+        //26 (alphabet) + 4 space character to increase the probability of space
+        char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[rand() % 30];
+        fprintf(fp, "%c", randomletter);
+    }
+}
+
+void write_to_file_index(FILE *fp, int index, char *str){
     if(index>maxIndex){
         maxIndex = index;
-        for(int i = 0; i < index-lastIndex-lastStrLen; i++){
-            //26 (alphabet) + 4 space character to increase the possibility of space
-            char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[random () % 30];
-            fprintf(fp, "%c", randomletter);
-        }
+        int dummyStrLen = index-lastIndex-lastStrLen;
+        write_dummy_string_from_n_character(fp, dummyStrLen);
     }
     lastStrLen = strlen(str);
     lastIndex = index;
@@ -46,47 +48,47 @@ void writeToSpecificIndex(FILE *fp, int index, char *str){
     fprintf(fp, "%s", str);
 }
 
-void customWriteToNewFile(){
+void custom_write_to_new_file(){
     FILE *fp= fopen(FILENAME, "w+");
     if(fp == NULL){
         perror("Cannot open file to write!");
     }
-    writeToSpecificIndex(fp, 0, prg1);
-    writeToSpecificIndex(fp, 1000, prg2);
-    writeToSpecificIndex(fp, 10000, prg3);
-    writeToSpecificIndex(fp, 1000000, prg4);
+    write_to_file_index(fp, 0, prg1);
+    write_to_file_index(fp, 1000, prg2);
+    write_to_file_index(fp, 10000, prg3);
+    write_to_file_index(fp, 1000000, prg4);
 
     //writeToSpecificLine(fp, 4, PRG4);
     fclose(fp);
 }
 
-void readAndAssertWithIndex(FILE *fp, char prg[], int index){
+void read_and_assert_with_index(FILE *fp, char prg[], int index){
     unsigned long lenPrg = strlen(prg);
     char buffer[lenPrg+1];
 
     fseek(fp, index, SEEK_SET);
     fgets(buffer, sizeof(buffer), fp);
-    assert(!strcmp(prg, buffer)); //strcmp gives 0 (false) if the strings are equal
+    assert(!strcmp(prg, buffer));
     printf("%s\n", buffer);
 }
 
-void readTheParagraphs(){
+void read_the_file(){
     FILE *fp;
     fp = fopen(FILENAME, "r+");
     if(fp == NULL){
         perror("Cannot open file to read!");
     }
 
-    readAndAssertWithIndex(fp, prg1, 0);
-    readAndAssertWithIndex(fp, prg2, 1000);
-    readAndAssertWithIndex(fp, prg3, 10000);
-    readAndAssertWithIndex(fp, prg4, 1000000);
+    read_and_assert_with_index(fp, prg1, 0);
+    read_and_assert_with_index(fp, prg2, 1000);
+    read_and_assert_with_index(fp, prg3, 10000);
+    read_and_assert_with_index(fp, prg4, 1000000);
 
     fclose(fp);
 }
 
 int main() {
-    customWriteToNewFile();
-    readTheParagraphs();
+    custom_write_to_new_file();
+    read_the_file();
     return 0;
 }
