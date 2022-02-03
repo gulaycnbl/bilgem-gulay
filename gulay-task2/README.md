@@ -27,20 +27,27 @@ text files for different test scenarios can be prepared by using customWriteToNe
 
 (1) 
 
-![task2_func1](https://user-images.githubusercontent.com/60276129/152140666-2dfb5164-9563-4d47-bd1b-0aabfd169dd2.jpg)
+
+![task2_writeLine](https://user-images.githubusercontent.com/60276129/152296087-544ab5af-aa95-41ae-866a-96fdf3c9b1cf.jpg)
 
 
 (2)
 
+For this function, a helper function was needed to fill the gaps between the paragraphs. See the function write_dummy_string_from_n_character() below.
 
-![task2_func2](https://user-images.githubusercontent.com/60276129/152140826-111fa47a-282d-44bd-adb2-94a98c8a6108.jpg)
+![task2_writeFileIndex](https://user-images.githubusercontent.com/60276129/152296133-ad831b89-0905-4d11-81ee-5f75df6a4025.jpg)
+
+![task2_dummy_str](https://user-images.githubusercontent.com/60276129/152296589-6ded1cad-75b2-4d93-8ca7-0fc5c7134e66.jpg)
+
+
 
 
 ## Read from a file:
 
-A function readAndAssertWithIndex(), which can be seen below, is used to read the text file, and assert the readings are correct.
+A function to read the file indexes and assert their content are correct is used here.
 
-![task2_func3](https://user-images.githubusercontent.com/60276129/152141954-40f55574-0977-44b6-924d-ece2567dbfcb.jpg)
+
+![task2_readAssert](https://user-images.githubusercontent.com/60276129/152296695-bc114ab1-ec1b-4106-a2b1-4be214de771c.jpg)
 
 
 
@@ -63,4 +70,6 @@ Step-by-step guide for usage:
 
 - Compile and run it like the following gif.
 
-![task2_terminal](https://user-images.githubusercontent.com/60276129/152143473-1f9b7cfd-87f2-4113-8303-8dc115190ac7.gif)
+![task2](https://user-images.githubusercontent.com/60276129/152297198-d52c6f60-a894-4783-8383-360778dd6c2f.gif)
+
+
