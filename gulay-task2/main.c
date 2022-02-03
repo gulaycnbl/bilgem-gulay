@@ -69,7 +69,7 @@ void read_and_assert_with_index(FILE *fp, char prg[], int index){
     fseek(fp, index, SEEK_SET);
     fgets(buffer, sizeof(buffer), fp);
     assert(!strcmp(prg, buffer));
-    printf("%s\n", buffer);
+    printf("The %d indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
 }
 
 void read_the_file(){
