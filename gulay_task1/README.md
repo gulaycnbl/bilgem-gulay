@@ -41,7 +41,7 @@ Step by step guide for usage:
 
 That's it, the code will test if your file is read correctly.
 
-![task1_terminal](https://user-images.githubusercontent.com/60276129/152134830-38228804-2d40-4192-a32e-cc2f9bb96218.gif)
+![task1](https://user-images.githubusercontent.com/60276129/152297891-55fb2697-ea0c-44e1-a832-a31e03fec6cd.gif)
 
 
 
