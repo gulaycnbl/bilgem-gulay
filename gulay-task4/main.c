@@ -91,7 +91,7 @@ void *thread_func(){
     }
 
 
-   for(int i=0; i<6; i++){
+   for(int i=0; i<NUMOFPRGS; i++){
         pthread_mutex_lock(&lock);
        printf("%d\n", pthread_self());
        if(i==1){
@@ -109,15 +109,6 @@ int main() {
     if(fp == NULL){
         perror("Cannot open file to read!");
     }
-
-    /*for(int i=0; i<NUMOFPRGS; i++){
-        //index that violates the series (it's 1000 because 1 and 100 is too close)
-        if(i==1){
-            read_and_assert_with_index(fp, array_for_prgs[i], 1000);
-        }else{
-            read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
-        }
-    }*/
     pthread_t tid[2];
 
     if (pthread_mutex_init(&lock, NULL) != 0) {
@@ -126,10 +117,10 @@ int main() {
     }
 
     pthread_create(&(tid[0]), NULL, &thread_func, NULL);
-    //pthread_create(&(tid[1]), NULL, &thread_func, (arrayForAssertForThread2, indexArray2));
+    pthread_create(&(tid[1]), NULL, &thread_func, NULL);
 
     pthread_join(tid[0], NULL);
-    //pthread_join(tid[1], NULL);
+    pthread_join(tid[1], NULL);
     pthread_mutex_destroy(&lock);
     return 0;
 }
