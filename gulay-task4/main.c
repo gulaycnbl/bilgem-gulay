@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include <unistd.h>
 
 #define FILENAME "lorem.txt"
 #define NUMOFPRGS 6
@@ -82,8 +81,6 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
 }
 
 void *thread_read_even_index_func(){
-    /*pthread_once_t once_control = PTHREAD_ONCE_INIT;
-    pthread_once(&once_control, open_file);*/
     FILE *fp= fopen(FILENAME, "r+");
     if(fp == NULL){
         perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
@@ -101,8 +98,6 @@ void *thread_read_even_index_func(){
 }
 
 void *thread_read_odd_index_func(){
-    /*pthread_once_t once_control = PTHREAD_ONCE_INIT;
-    pthread_once(&once_control, open_file);*/
     FILE *fp= fopen(FILENAME, "r+");
     if(fp == NULL){
         perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
