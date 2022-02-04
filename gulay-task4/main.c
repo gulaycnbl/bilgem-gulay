@@ -81,7 +81,26 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
     printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
 }
 
-void *thread_func(){
+void *thread_read_even_index_func(){
+    /*pthread_once_t once_control = PTHREAD_ONCE_INIT;
+    pthread_once(&once_control, open_file);*/
+    FILE *fp= fopen(FILENAME, "r+");
+    if(fp == NULL){
+        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
+               "or run the custom_write_to_new_file() function once");
+    }
+    for(int i=0; i<NUMOFPRGS; i++){
+        if((i == 0) || (i%2 == 0)){
+            pthread_mutex_lock(&lock);
+            printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), i);
+            read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
+            pthread_mutex_unlock(&lock);
+        }
+    }
+    return NULL;
+}
+
+void *thread_read_odd_index_func(){
     /*pthread_once_t once_control = PTHREAD_ONCE_INIT;
     pthread_once(&once_control, open_file);*/
     FILE *fp= fopen(FILENAME, "r+");
@@ -90,16 +109,18 @@ void *thread_func(){
                "or run the custom_write_to_new_file() function once");
     }
 
-
    for(int i=0; i<NUMOFPRGS; i++){
-        pthread_mutex_lock(&lock);
-       printf("%d\n", pthread_self());
-       if(i==1){
-           read_and_assert_with_index(fp, array_for_prgs[i], 1000);
-       }else{
-           read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
+       if(i%2 != 0){
+           pthread_mutex_lock(&lock);
+           if(i==1){
+               printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), i);
+               read_and_assert_with_index(fp, array_for_prgs[i], 1000);
+           }else{
+               printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), i);
+               read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
+           }
+           pthread_mutex_unlock(&lock);
        }
-        pthread_mutex_unlock(&lock);
     }
     return NULL;
 }
@@ -116,8 +137,8 @@ int main() {
         return 1;
     }
 
-    pthread_create(&(tid[0]), NULL, &thread_func, NULL);
-    pthread_create(&(tid[1]), NULL, &thread_func, NULL);
+    pthread_create(&(tid[0]), NULL, &thread_read_even_index_func, NULL);
+    pthread_create(&(tid[1]), NULL, &thread_read_odd_index_func, NULL);
 
     pthread_join(tid[0], NULL);
     pthread_join(tid[1], NULL);
