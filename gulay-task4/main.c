@@ -15,7 +15,7 @@ char prg3[] = "4-What the hammer? what the chain, In what furnace was the brain?
 char prg4[] = "5-When the stars threw down their spears And water'd heaven with their tears, Did he smile his work to see? Did he who made the Lamb make thee?";
 char prg5[] = "6-Tyger Tyger burning bright, In the forests of the night, What immortal hand or eye,Dare frame the fearful symmetry?";
 
-const char *arrayForPrgs[6] = {
+const char *array_for_prgs[6] = {
         prg0,
         prg1,
         prg2,
@@ -24,9 +24,9 @@ const char *arrayForPrgs[6] = {
         prg5,
 };
 
-long lastIndex = 0;
-long maxIndex = 0;
-unsigned long lastStrLen = 0;
+long last_index = 0;
+long max_index = 0;
+unsigned long last_str_len = 0;
 pthread_mutex_t lock;
 
 long my_pow(int a, long b){
@@ -42,13 +42,13 @@ void write_dummy_string_from_n_character(FILE *fp, unsigned long n){
 }
 
 void write_to_file_index(FILE *fp, long index, char *str){
-    if(index>maxIndex){
-        maxIndex = index;
-        unsigned long dummyStrLen = index-lastIndex-lastStrLen;
-        write_dummy_string_from_n_character(fp, dummyStrLen);
+    if(index > max_index){
+        max_index = index;
+        unsigned long dummy_str_len = index - last_index - last_str_len;
+        write_dummy_string_from_n_character(fp, dummy_str_len);
     }
-    lastStrLen = strlen(str);
-    lastIndex = index;
+    last_str_len = strlen(str);
+    last_index = index;
     fseek(fp, index, SEEK_SET);
     fprintf(fp, "%s", str);
 }
@@ -62,9 +62,9 @@ void custom_write_to_new_file(){
     for(int i=0; i<NUMOFPRGS; i++){
         //index that violates the series (it's 1000 because 1 and 100 is too close)
         if(i==1){
-            write_to_file_index(fp, 1000, arrayForPrgs[i]);
+            write_to_file_index(fp, 1000, array_for_prgs[i]);
         }else{
-            write_to_file_index(fp, my_pow(100, i), arrayForPrgs[i]);
+            write_to_file_index(fp, my_pow(100, i), array_for_prgs[i]);
         }
     }
 
@@ -72,8 +72,8 @@ void custom_write_to_new_file(){
 }
 
 void read_and_assert_with_index(FILE *fp, char prg[], long index){
-    unsigned long lenPrg = strlen(prg);
-    char buffer[lenPrg+1];
+    unsigned long len_of_prg = strlen(prg);
+    char buffer[len_of_prg + 1];
 
     fseek(fp, index, SEEK_SET);
     fgets(buffer, sizeof(buffer), fp);
@@ -81,28 +81,26 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
     printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
 }
 
-void *thread_func(int *indArr[]){
+void *thread_func(){
     /*pthread_once_t once_control = PTHREAD_ONCE_INIT;
     pthread_once(&once_control, open_file);*/
-    /*FILE *fp= fopen(FILENAME, "r+");
+    FILE *fp= fopen(FILENAME, "r+");
     if(fp == NULL){
         perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
                "or run the custom_write_to_new_file() function once");
-    }*/
+    }
 
-    /*
-   for(int i=0; i<3; i++){
+
+   for(int i=0; i<6; i++){
         pthread_mutex_lock(&lock);
-        read_and_assert_with_index(fp, array[i], indArr[i]);
+       printf("%d\n", pthread_self());
+       if(i==1){
+           read_and_assert_with_index(fp, array_for_prgs[i], 1000);
+       }else{
+           read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
+       }
         pthread_mutex_unlock(&lock);
     }
-    */
-
-    //printf("%d\n",indArr[0]);
-
-    //printf("%s\n", array[0]);
-    //read_and_assert_with_index(fp, array[0], indArr[0]);
-    //read_and_assert_with_index(fp, arrayForAssertForThread2[0], indexArray2[0]);
     return NULL;
 }
 
@@ -112,32 +110,26 @@ int main() {
         perror("Cannot open file to read!");
     }
 
-    for(int i=0; i<NUMOFPRGS; i++){
+    /*for(int i=0; i<NUMOFPRGS; i++){
         //index that violates the series (it's 1000 because 1 and 100 is too close)
         if(i==1){
-            read_and_assert_with_index(fp, arrayForPrgs[i], 1000);
+            read_and_assert_with_index(fp, array_for_prgs[i], 1000);
         }else{
-            read_and_assert_with_index(fp, arrayForPrgs[i], my_pow(100, i));
+            read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
         }
-    }
-    /*
+    }*/
     pthread_t tid[2];
 
-    printf("MAİN, indexArr1[0]: %d\n", indexArray1[0]);
-    printf("MAİN, indexArr1[1]: %d\n", indexArray1[1]);
-    printf("MAİN, indexArr1[2]: %d\n", indexArray1[2]);
-
-    if (pthread_mutex_init(&lock, NULL) != 0)
-    {
+    if (pthread_mutex_init(&lock, NULL) != 0) {
         printf("\n mutex init failed\n");
         return 1;
     }
 
-    pthread_create(&(tid[0]), NULL, &thread_func, (void *)indexArray1);
+    pthread_create(&(tid[0]), NULL, &thread_func, NULL);
     //pthread_create(&(tid[1]), NULL, &thread_func, (arrayForAssertForThread2, indexArray2));
 
     pthread_join(tid[0], NULL);
     //pthread_join(tid[1], NULL);
-    pthread_mutex_destroy(&lock);*/
+    pthread_mutex_destroy(&lock);
     return 0;
 }
