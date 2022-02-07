@@ -14,7 +14,7 @@ char prg3[] = "4-What the hammer? what the chain, In what furnace was the brain?
 char prg4[] = "5-When the stars threw down their spears And water'd heaven with their tears, Did he smile his work to see? Did he who made the Lamb make thee?";
 char prg5[] = "6-Tyger Tyger burning bright, In the forests of the night, What immortal hand or eye,Dare frame the fearful symmetry?";
 
-const char *array_for_prgs[6] = {
+const char *array_for_prgs[NUMOFPRGS] = {
         prg0,
         prg1,
         prg2,
@@ -76,7 +76,7 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
 
     fseek(fp, index, SEEK_SET);
     fgets(buffer, sizeof(buffer), fp);
-    assert(!strcmp(prg, buffer));
+    assert(strcmp(prg, buffer)==0);
     printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
 }
 
