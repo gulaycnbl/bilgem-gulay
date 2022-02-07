@@ -59,7 +59,6 @@ void custom_write_to_new_file(){
     }
     write_to_file_index(fp, 1, prg0);
     for(int i=0; i<NUMOFPRGS; i++){
-        //index that violates the series (it's 1000 because 1 and 100 is too close)
         if(i==1){
             write_to_file_index(fp, 1000, array_for_prgs[i]);
         }else{
