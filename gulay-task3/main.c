@@ -61,25 +61,35 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
     printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
 }
 
-int main() {
-    //custom_write_to_new_file();
+void execute_child_process(){
     FILE *fp;
     fp = fopen(FILENAME, "r+");
     if(fp == NULL){
         perror("Cannot open file to read!");
     }
-
-    //child process
-    if(fork()==0){
-        read_and_assert_with_index(fp, prg1, 0);
-        read_and_assert_with_index(fp, prg3, 10000);
-        read_and_assert_with_index(fp, prg5, 100000000);
-    }else{
-        read_and_assert_with_index(fp, prg2, 1000);
-        read_and_assert_with_index(fp, prg4, 1000000);
-        read_and_assert_with_index(fp, prg6, 10000000000);
-    }
-
+    read_and_assert_with_index(fp, prg1, 0);
+    read_and_assert_with_index(fp, prg3, 10000);
+    read_and_assert_with_index(fp, prg5, 100000000);
     fclose(fp);
+}
+
+void execute_parent_process(){
+    FILE *fp;
+    fp = fopen(FILENAME, "r+");
+    if(fp == NULL){
+        perror("Cannot open file to read!");
+    }
+    read_and_assert_with_index(fp, prg2, 1000);
+    read_and_assert_with_index(fp, prg4, 1000000);
+    read_and_assert_with_index(fp, prg6, 10000000000);
+    fclose(fp);
+}
+
+int main() {
+    if(fork()==0){
+        execute_child_process();
+    }else{
+        execute_parent_process();
+    }
     return 0;
 }
