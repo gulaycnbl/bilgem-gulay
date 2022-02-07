@@ -89,7 +89,7 @@ void *thread_read_even_index_func(){
     for(int i=0; i<NUMOFPRGS; i++){
         if((i == 0) || (i%2 == 0)){
             pthread_mutex_lock(&lock);
-            printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), i);
+            printf("Inside the thread 1 [%lu]: Prg %d - ", pthread_self(), i);
             read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
             pthread_mutex_unlock(&lock);
         }
@@ -108,10 +108,10 @@ void *thread_read_odd_index_func(){
        if(i%2 != 0){
            pthread_mutex_lock(&lock);
            if(i==1){
-               printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), i);
+               printf("Inside the thread 2 [%lu]: Prg %d - ", pthread_self(), i);
                read_and_assert_with_index(fp, array_for_prgs[i], 1000);
            }else{
-               printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), i);
+               printf("Inside the thread 2 [%lu]: Prg %d - ", pthread_self(), i);
                read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
            }
            pthread_mutex_unlock(&lock);
