@@ -65,7 +65,6 @@ void custom_write_to_new_file(){
     if(fp == NULL){
         perror("Cannot open file to write!");
     }
-    write_to_file_index(fp, 1, prg0);
     for(int i=0; i<NUMOFPRGS; i++){
         if(check_series_index_violation(i)){
             write_to_file_index(fp, 1000, array_for_prgs[i]);
