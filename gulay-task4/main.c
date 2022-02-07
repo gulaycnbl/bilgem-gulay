@@ -33,9 +33,13 @@ long my_pow(int a, long b){
     return a * my_pow(a, b - 1);
 }
 
+char get_random_letter_with_increased_space_possibility(){
+    return "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[rand() % 30];
+}
+
 void write_dummy_string_from_n_character(FILE *fp, unsigned long n){
     for(long i = 0; i < n; i++){
-        char randomletter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[rand() % 30];
+        char randomletter = get_random_letter_with_increased_space_possibility();
         fprintf(fp, "%c", randomletter);
     }
 }
