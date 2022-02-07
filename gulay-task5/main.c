@@ -77,69 +77,6 @@ void *thread_func_parent(const int arr[]) {
     return NULL;
 }
 
-/*void *thread2_func() {
-    FILE *fp= fopen(FILENAME, "r+");
-    if(fp == NULL){
-        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
-               "or run the custom_write_to_new_file() function once");
-    }
-
-    while(index_arr_count < NUMOFPRGS - 1){
-        pthread_mutex_lock(&lock2);
-        //pthread_cond_wait(&cond2, &lock2);
-        printf("Inside the thread 2 [%lu]: Prg %d - ", pthread_self(), index_arr_count);
-        //read_and_assert_with_index(fp, prg_arr[index_arr_count], index_arr[index_arr_count]);
-        read_and_assert_with_index(fp, prg1, 10000);
-        //read_and_assert_with_index(fp, prg5, 50000);
-        index_arr_count++;
-        //pthread_cond_signal(&cond3);
-        pthread_mutex_unlock(&lock2);
-    }
-
-    fclose(fp);
-}
-
-void *thread3_func() {
-    FILE *fp= fopen(FILENAME, "r+");
-    if(fp == NULL){
-        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
-               "or run the custom_write_to_new_file() function once");
-    }
-
-    while(index_arr_count < NUMOFPRGS - 1){
-        pthread_mutex_lock(&lock3);
-        pthread_cond_wait(&cond3, &lock3);
-        printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index_arr_count);
-        read_and_assert_with_index(fp, prg_arr[index_arr_count], index_arr[index_arr_count]);
-        index_arr_count++;
-        pthread_cond_signal(&cond4);
-        pthread_mutex_unlock(&lock3);
-    }
-
-    fclose(fp);
-}
-
-void *thread4_func() {
-    FILE *fp= fopen(FILENAME, "r+");
-    if(fp == NULL){
-        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
-               "or run the custom_write_to_new_file() function once");
-    }
-
-    while(index_arr_count < NUMOFPRGS - 1){
-        pthread_mutex_lock(&lock4);
-        pthread_cond_wait(&cond4, &lock4);
-        printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index_arr_count);
-        read_and_assert_with_index(fp, prg_arr[index_arr_count], index_arr[index_arr_count]);
-        index_arr_count++;
-        pthread_cond_signal(&cond1);
-        pthread_mutex_unlock(&lock4);
-    }
-
-    fclose(fp);
-}
- */
-
 int main() {
     FILE *fp= fopen(FILENAME, "r+");
     if(fp == NULL){
