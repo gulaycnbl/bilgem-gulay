@@ -52,6 +52,10 @@ void write_to_file_index(FILE *fp, long index, char *str){
     fprintf(fp, "%s", str);
 }
 
+int check_series_index_violation(int index){
+    return index == 1;
+}
+
 void custom_write_to_new_file(){
     FILE *fp= fopen(FILENAME, "w+");
     if(fp == NULL){
@@ -59,13 +63,12 @@ void custom_write_to_new_file(){
     }
     write_to_file_index(fp, 1, prg0);
     for(int i=0; i<NUMOFPRGS; i++){
-        if(i==1){
+        if(check_series_index_violation(i)){
             write_to_file_index(fp, 1000, array_for_prgs[i]);
         }else{
             write_to_file_index(fp, my_pow(100, i), array_for_prgs[i]);
         }
     }
-
     fclose(fp);
 }
 
@@ -106,7 +109,7 @@ void *thread_read_odd_index_func(){
    for(int i=0; i<NUMOFPRGS; i++){
        if(i%2 != 0){
            pthread_mutex_lock(&lock);
-           if(i==1){
+           if(check_series_index_violation(i)){
                printf("Inside the thread 2 [%lu]: Prg %d - ", pthread_self(), i);
                read_and_assert_with_index(fp, array_for_prgs[i], 1000);
            }else{
