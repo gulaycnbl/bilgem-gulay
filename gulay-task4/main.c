@@ -37,7 +37,7 @@ char get_random_letter_with_increased_space_possibility(){
     return "ABCDEFGHIJKLMNOPQRSTUVWXYZ    "[rand() % 30];
 }
 
-void write_dummy_string_from_n_character(FILE *fp, unsigned long n){
+void write_random_n_character(FILE *fp, unsigned long n){
     for(long i = 0; i < n; i++){
         char randomletter = get_random_letter_with_increased_space_possibility();
         fprintf(fp, "%c", randomletter);
@@ -48,7 +48,7 @@ void write_to_file_index(FILE *fp, long index, char *str){
     if(index > max_index){
         max_index = index;
         unsigned long dummy_str_len = index - previous_index - last_str_len;
-        write_dummy_string_from_n_character(fp, dummy_str_len);
+        write_random_n_character(fp, dummy_str_len);
     }
     last_str_len = strlen(str);
     previous_index = index;
