@@ -86,24 +86,22 @@ int main() {
                "or run the custom_write_to_new_file() function once");
     }
 
-    int arr1[] = {0, 4, 8};
-    int arr2[] = {1, 5, 9};
-    int arr3[] = {2, 6, 10};
-    int arr4[] = {3, 7, 11};
+    int child_thread1_index_arr[] = {0, 4, 8};
+    int child_thread2_index_arr[] = {1, 5, 9};
+    int parent_thread1_index_arr[] = {2, 6, 10};
+    int parent_thread2_index_arr[] = {3, 7, 11};
 
     pthread_t tid[4];
 
     if(fork()==0){
-
-        pthread_create(&(tid[0]), NULL, (void *(*)(void *)) &thread_func, (void *)arr1);
-        pthread_create(&(tid[1]), NULL, (void *(*)(void *)) &thread_func, (void *)arr2);
+        pthread_create(&(tid[0]), NULL, (void *(*)(void *)) &thread_func, (void *)child_thread1_index_arr);
+        pthread_create(&(tid[1]), NULL, (void *(*)(void *)) &thread_func, (void *)child_thread2_index_arr);
 
         pthread_join(tid[0], NULL);
         pthread_join(tid[1], NULL);
     }else{
-
-        pthread_create(&(tid[2]), NULL, (void *(*)(void *)) &thread_func_parent, (void *)arr3);
-        pthread_create(&(tid[3]), NULL, (void *(*)(void *)) &thread_func_parent, (void *)arr4);
+        pthread_create(&(tid[2]), NULL, (void *(*)(void *)) &thread_func_parent, (void *)parent_thread1_index_arr);
+        pthread_create(&(tid[3]), NULL, (void *(*)(void *)) &thread_func_parent, (void *)parent_thread2_index_arr);
 
         pthread_join(tid[2], NULL);
         pthread_join(tid[3], NULL);
