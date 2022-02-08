@@ -4,9 +4,9 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define FILENAME "lorem.txt"
-#define NUMOFPRGS 12
-#define NUMOFTHREADS 4
+#define FILE_NAME "lorem.txt"
+#define NUMBER_OF_PARAGRAPHS 12
+#define NUMBER_OF_THREADS 4
 
 char prg0[] = "Once when I was six years old I saw a magnificent picture in a book, called True Stories from Nature, about the primeval forest. It was a picture of a boa constrictor in the act of swallowing an animal. Here is a copy of the drawing.";
 char prg1[] = "In the book it said: \"Boa constrictors swallow their prey whole, without chewing it. After that they are not able to move, and they sleep through the six months that they need for digestion. I pondered deeply, then, over the adventures of the jungle. And after some work with a colored pencil I succeeded in making my first drawing. My Drawing Number One. It looked something like this:";
@@ -21,11 +21,11 @@ char prg9[] = "I have lived a great deal among grown-ups. I have seen them intim
 char prg10[] = "Whenever I met one of them who seemed to me at all clear-sighted, I tried the experiment of showing him my Drawing Number One, which I have always kept. I would try to find out, so, if this was a person of true understanding. But, whoever it was, he, or she, would always say: \"That is a hat.\"";
 char prg11[] = "Then I would never talk to that person about boa constrictors, or primeval forests, or stars. I would bring myself down to his level. I would talk to him about bridge, and golf, and politics, and neckties. And the grown-up would be greatly pleased to have met such a sensible man.";
 
-const char *prg_arr[NUMOFPRGS] = {
+const char *paragraphs[NUMBER_OF_PARAGRAPHS] = {
         prg0, prg1, prg2, prg3, prg4, prg5, prg6, prg7, prg8, prg9, prg10, prg11,
 };
 
-const int index_arr[NUMOFPRGS] = {0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 110000};
+const int index_arr[NUMBER_OF_PARAGRAPHS] = {0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 110000};
 
 pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;
@@ -37,21 +37,21 @@ void read_and_assert_with_index(FILE *fp, char prg[], long index){
     fseek(fp, index, SEEK_SET);
     fgets(buffer, sizeof(buffer), fp);
     assert(!strcmp(prg, buffer));
-    printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILENAME);
+    printf("The %lu indexed content of the file (%s) matches with the predefined content.\n", index, FILE_NAME);
 }
 
 void *thread_func(const int arr[]) {
-    FILE *fp= fopen(FILENAME, "r+");
+    FILE *fp= fopen(FILE_NAME, "r+");
     if(fp == NULL){
-        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
+        perror("Cannot open file to read! You can either provide an existing file and change the FILE_NAME, "
                "or run the custom_write_to_new_file() function once");
     }
 
-    for(int i=0; i<NUMOFPRGS/NUMOFTHREADS; i++){
+    for(int i=0; i < NUMBER_OF_PARAGRAPHS / NUMBER_OF_THREADS; i++){
         int index = arr[i];
         pthread_mutex_lock(&lock1);
         printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index);
-        read_and_assert_with_index(fp, prg_arr[index], index_arr[index]);
+        read_and_assert_with_index(fp, paragraphs[index], index_arr[index]);
         pthread_mutex_unlock(&lock1);
     }
 
@@ -60,9 +60,9 @@ void *thread_func(const int arr[]) {
 }
 
 void *thread_func_parent(const int arr[]) {
-    FILE *fp= fopen(FILENAME, "r+");
+    FILE *fp= fopen(FILE_NAME, "r+");
     if(fp == NULL){
-        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
+        perror("Cannot open file to read! You can either provide an existing file and change the FILE_NAME, "
                "or run the custom_write_to_new_file() function once");
     }
 
@@ -70,7 +70,7 @@ void *thread_func_parent(const int arr[]) {
         int index = arr[i];
         pthread_mutex_lock(&lock2);
         printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index);
-        read_and_assert_with_index(fp, prg_arr[index], index_arr[index]);
+        read_and_assert_with_index(fp, paragraphs[index], index_arr[index]);
         pthread_mutex_unlock(&lock2);
     }
     fclose(fp);
@@ -78,9 +78,9 @@ void *thread_func_parent(const int arr[]) {
 }
 
 int main() {
-    FILE *fp= fopen(FILENAME, "r+");
+    FILE *fp= fopen(FILE_NAME, "r+");
     if(fp == NULL){
-        perror("Cannot open file to read! You can either provide an existing file and change the FILENAME, "
+        perror("Cannot open file to read! You can either provide an existing file and change the FILE_NAME, "
                "or run the custom_write_to_new_file() function once");
     }
 
