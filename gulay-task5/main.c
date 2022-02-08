@@ -51,7 +51,7 @@ void *thread_func(const int arr[]) {
     for(int i=0; i < num_of_paragraphs_per_thread; i++){
         int index = arr[i];
         pthread_mutex_lock(&lock1);
-        printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index);
+        printf("Inside the child process thread [%lu]: Prg %d - ", pthread_self(), index);
         read_and_assert_with_index(fp, paragraphs[index], index_arr[index]);
         pthread_mutex_unlock(&lock1);
     }
@@ -71,7 +71,7 @@ void *thread_func_parent(const int arr[]) {
     for(int i=0; i<num_of_paragraphs_per_thread; i++){
         int index = arr[i];
         pthread_mutex_lock(&lock2);
-        printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index);
+        printf("Inside the parent process thread [%lu]: Prg %d - ", pthread_self(), index);
         read_and_assert_with_index(fp, paragraphs[index], index_arr[index]);
         pthread_mutex_unlock(&lock2);
     }
