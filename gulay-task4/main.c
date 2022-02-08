@@ -14,7 +14,7 @@ char prg3[] = "4-What the hammer? what the chain, In what furnace was the brain?
 char prg4[] = "5-When the stars threw down their spears And water'd heaven with their tears, Did he smile his work to see? Did he who made the Lamb make thee?";
 char prg5[] = "6-Tyger Tyger burning bright, In the forests of the night, What immortal hand or eye,Dare frame the fearful symmetry?";
 
-const char *array_for_prgs[NUMBER_OF_PARAGRAPHS] = {
+const char *paragraphs[NUMBER_OF_PARAGRAPHS] = {
         prg0,
         prg1,
         prg2,
@@ -67,9 +67,9 @@ void custom_write_to_new_file(){
     }
     for(int i=0; i < NUMBER_OF_PARAGRAPHS; i++){
         if(is_series_index_violated(i)){
-            write_to_file_index(fp, 1000, array_for_prgs[i]);
+            write_to_file_index(fp, 1000, paragraphs[i]);
         }else{
-            write_to_file_index(fp, my_pow(100, i), array_for_prgs[i]);
+            write_to_file_index(fp, my_pow(100, i), paragraphs[i]);
         }
     }
     fclose(fp);
@@ -95,7 +95,7 @@ void *thread_read_even_index_func(){
         if((i == 0) || (i%2 == 0)){
             pthread_mutex_lock(&lock);
             printf("Inside the thread 1 [%lu]: Prg %d - ", pthread_self(), i);
-            read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
+            read_and_assert_with_index(fp, paragraphs[i], my_pow(100, i));
             pthread_mutex_unlock(&lock);
         }
     }
@@ -114,10 +114,10 @@ void *thread_read_odd_index_func(){
            pthread_mutex_lock(&lock);
            if(is_series_index_violated(i)){
                printf("Inside the thread 2 [%lu]: Prg %d - ", pthread_self(), i);
-               read_and_assert_with_index(fp, array_for_prgs[i], 1000);
+               read_and_assert_with_index(fp, paragraphs[i], 1000);
            }else{
                printf("Inside the thread 2 [%lu]: Prg %d - ", pthread_self(), i);
-               read_and_assert_with_index(fp, array_for_prgs[i], my_pow(100, i));
+               read_and_assert_with_index(fp, paragraphs[i], my_pow(100, i));
            }
            pthread_mutex_unlock(&lock);
        }
