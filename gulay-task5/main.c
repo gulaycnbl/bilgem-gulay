@@ -47,7 +47,8 @@ void *thread_func(const int arr[]) {
                "or run the custom_write_to_new_file() function once");
     }
 
-    for(int i=0; i < NUMBER_OF_PARAGRAPHS / NUMBER_OF_THREADS; i++){
+    int num_of_paragraphs_per_thread = NUMBER_OF_PARAGRAPHS / NUMBER_OF_THREADS;
+    for(int i=0; i < num_of_paragraphs_per_thread; i++){
         int index = arr[i];
         pthread_mutex_lock(&lock1);
         printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index);
@@ -66,7 +67,8 @@ void *thread_func_parent(const int arr[]) {
                "or run the custom_write_to_new_file() function once");
     }
 
-    for(int i=0; i<3; i++){
+    int num_of_paragraphs_per_thread = NUMBER_OF_PARAGRAPHS / NUMBER_OF_THREADS;
+    for(int i=0; i<num_of_paragraphs_per_thread; i++){
         int index = arr[i];
         pthread_mutex_lock(&lock2);
         printf("Inside the thread [%lu]: Prg %d - ", pthread_self(), index);
