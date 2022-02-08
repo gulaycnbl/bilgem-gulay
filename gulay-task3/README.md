@@ -86,6 +86,9 @@ Step-by-step guide for usage:
 - To read, you should modify the paragraphs and indexes of read_and_assert_with_index() functions inside execute functions for processes. 
 Replace them with the correct paragraphs and indexes to test.
 
-- Compile and run it like the following gif:
+- Compile and run it either using terminal or the run button like in the following gif:
+
+![task3](https://user-images.githubusercontent.com/60276129/152986905-8d10a725-f393-43d2-bdb6-1d69bc4d37fb.gif)
+
 
 
