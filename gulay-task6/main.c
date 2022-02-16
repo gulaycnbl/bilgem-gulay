@@ -4,22 +4,26 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define FILE_NAME "task500.config"
+#define FILE_NAME "task100.config"
 #define MAX_LEN 1500
 #define NUM_OF_THREADS 4
 int retrieved_number_of_paragraphs;
 
-int get_number_from_first_line(FILE *fp){
+pthread_once_t once_control = PTHREAD_ONCE_INIT;
+
+void get_number_from_first_line( void ){
+    FILE *fp = fopen(FILE_NAME, "r+");
+    if (fp == NULL) perror("Cannot open file!");
     char buffer[10];
     fgets(buffer, sizeof(buffer), fp);
-    return retrieved_number_of_paragraphs = atoi(buffer);
+    retrieved_number_of_paragraphs = atoi(buffer);
 }
 
 void *thread_read_file(int n){
     FILE *fp = fopen(FILE_NAME, "r+");
     if (fp == NULL) perror("Cannot open file!");
 
-    get_number_from_first_line(fp);
+    pthread_once(&once_control, get_number_from_first_line);
     char line[MAX_LEN];
     fgets(line, sizeof line, fp);
     for(int i=0; i < retrieved_number_of_paragraphs - 1; i++){
