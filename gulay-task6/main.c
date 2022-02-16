@@ -6,7 +6,7 @@
 
 #define FILE_NAME "task100.config"
 #define MAX_LEN 1500
-int retrieved_number = 10; //number of paragraphs
+int retrieved_number; //number of paragraphs
 
 pthread_cond_t cond0 = PTHREAD_COND_INITIALIZER;
 pthread_cond_t cond1 = PTHREAD_COND_INITIALIZER;
@@ -35,56 +35,56 @@ void read_file(FILE *fp){
     //printf("ret_num: %d, count: %d", retrieved_number, count);
 }
 
-void *parent_thread_func0(void *arg){
+void *child_thread_func0(void *arg){
     while(retrieved_number!=0){
         pthread_mutex_lock(&lock0);
         //JOB Here
         retrieved_number--;
 
         pthread_cond_wait(&cond0, &lock0);
-        printf("I am thread0 PARENT generating the final report and inserting into a table \n");
+        printf("I am thread0 CHILD generating the final report and inserting into a table \n");
         pthread_cond_signal(&cond1);
         pthread_mutex_unlock(&lock0);
     }
     pthread_exit(NULL);
 }
 
-void *parent_thread_func1(void *arg){
+void *child_thread_func1(void *arg){
     while(retrieved_number!=0){
         pthread_mutex_lock(&lock1);
         //JOB Here
         retrieved_number--;
 
         pthread_cond_wait(&cond1, &lock1);
-        printf("I am thread1 PARENT generating the final report and inserting into a table \n");
+        printf("I am thread1 CHILD generating the final report and inserting into a table \n");
         pthread_cond_signal(&cond2);
         pthread_mutex_unlock(&lock1);
     }
     pthread_exit(NULL);
 }
 
-void *child_thread_func2(void *arg){
+void *parent_thread_func2(void *arg){
     while(retrieved_number!=0){
         pthread_mutex_lock(&lock2);
         //JOB Here
         retrieved_number--;
 
         pthread_cond_wait(&cond2, &lock2);
-        printf("I am thread2 CHILD generating the final report and inserting into a table \n");
+        printf("I am thread2 PARENT generating the final report and inserting into a table \n");
         pthread_cond_signal(&cond3);
         pthread_mutex_unlock(&lock2);
     }
     pthread_exit(NULL);
 }
 
-void *child_thread_func3(void *arg){
+void *parent_thread_func3(void *arg){
     while(retrieved_number!=0){
         pthread_mutex_lock(&lock3);
         //JOB Here
         retrieved_number--;
 
         pthread_cond_wait(&cond3, &lock3);
-        printf("I am thread3 CHILD generating the final report and inserting into a table \n");
+        printf("I am thread3 PARENT generating the final report and inserting into a table \n");
         pthread_cond_signal(&cond0);
         pthread_mutex_unlock(&lock3);
     }
@@ -92,6 +92,14 @@ void *child_thread_func3(void *arg){
 }
 
 int main() {
+    int fd_child_to_parent[2];
+    int fd_parent_to_child[2];
+    if(pipe(fd_child_to_parent) == -1) perror("Pipe fd_child_to_parent failed!");
+    if(pipe(fd_parent_to_child) == -1) perror("Pipe fd_parent_to_child failed!");
+    char *signal_to_parent;
+    char *signal_to_child;
+    int is_sent = 0;
+
     FILE *fp = fopen(FILE_NAME, "r");
     if (fp == NULL){
         perror("Cannot open file!");
@@ -103,36 +111,41 @@ int main() {
 
     pthread_t tid0, tid1, tid2, tid3;
 
-   /* int pid = fork();
+    int pid = fork();
     if(pid == -1){
         perror("Fork failed!");
         return -1;
     }else if (pid == 0){
-        if( pthread_create(&tid[0], NULL, parent_thread_func0, NULL) != 0 )
+        if(pthread_create(&tid0, NULL, child_thread_func0, NULL) != 0 )
             printf("Failed to create thread0\n");
-        if( pthread_create(&tid[1], NULL, parent_thread_func1, NULL) != 0 )
+        if(pthread_create(&tid1, NULL, child_thread_func1, NULL) != 0 )
             printf("Failed to create thread1\n");
+        pthread_cond_signal(&cond0);
+        printf("inside child retnum: %d\n", retrieved_number);
+
+        signal_to_parent = "1\0";
+        close(fd_child_to_parent[0]);
+        write(fd_child_to_parent[1], signal_to_parent, 2);
 
     }else{
-        if( pthread_create(&tid[2], NULL, child_thread_func2(), NULL) != 0 )
+        if(pthread_create(&tid2, NULL, parent_thread_func2, NULL) != 0 )
             printf("Failed to create thread2\n");
-        if( pthread_create(&tid[3], NULL, child_thread_func3(), NULL) != 0 )
+        if(pthread_create(&tid3, NULL, parent_thread_func3, NULL) != 0 )
             printf("Failed to create thread3\n");
-    }*/
+        printf("Inside parent retnum: %d\n", retrieved_number);
 
-    if( pthread_create(&tid0, NULL, parent_thread_func0, NULL) != 0 )
-        printf("Failed to create thread0\n");
-    if( pthread_create(&tid1, NULL, parent_thread_func1, NULL) != 0 )
-        printf("Failed to create thread1\n");
-    if( pthread_create(&tid2, NULL, child_thread_func2, NULL) != 0 )
-        printf("Failed to create thread2\n");
-    if( pthread_create(&tid3, NULL, child_thread_func3, NULL) != 0 )
-        printf("Failed to create thread3\n");
+        sleep(2);
 
-    pthread_cond_signal(&cond0);
+        char buf[2];
+        close(fd_child_to_parent[1]);
+        read(fd_child_to_parent[0], buf, 2);
+        if(atoi(buf) == 1) pthread_cond_signal(&cond2);
+        close(fd_child_to_parent[0]);
 
-    sleep(3);
-    printf("HERE\n");
+
+        printf("HERE parent\n");
+
+    }
 
     pthread_mutex_destroy(&lock0);
     pthread_mutex_destroy(&lock1);
