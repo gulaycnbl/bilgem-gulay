@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define FILE_NAME "try.config"
+#define FILE_NAME "task500.config"
 #define MAX_LEN 1500
 #define NUM_OF_THREADS 4
 int retrieved_number_of_paragraphs;
@@ -67,7 +67,7 @@ int main() {
             printf("Failed to create thread0\n");
         }
         pthread_join(tid0, NULL);
-        pthread_join(&tid1, NULL);
+        pthread_join(tid1, NULL);
     }else{
         if (pthread_create(&tid2, NULL, (void *(*)(void *)) thread_read_file, 2) != 0) {
             printf("Failed to create thread0\n");
@@ -76,8 +76,7 @@ int main() {
             printf("Failed to create thread0\n");
         }
         pthread_join(tid2, NULL);
-        pthread_join(&tid3, NULL);
-
+        pthread_join(tid3, NULL);
     }
     pthread_mutex_destroy(&lock);
     return 0;
