@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define FILE_NAME "task500.config"
+#define FILE_NAME "try.config"
 #define MAX_LEN 1500
 #define NUM_OF_THREADS 4
 int retrieved_number_of_paragraphs;
@@ -32,8 +32,9 @@ void *thread_read_file(int remainder){
     for(int i=0; i < retrieved_number_of_paragraphs; i++){
         if(i%NUM_OF_THREADS == remainder){
             pthread_mutex_lock(&lock);
-            fscanf(fp, "%[^\n]\n", &line);
-            printf("Thread [%d] read paragraph %d\n", remainder, i);
+            char buf[MAX_LEN];
+            fscanf(fp, "%[^\n]\n", &buf);
+            printf("Thread [%d] read paragraph %d: %s\n\n", remainder, i, buf);
             pthread_mutex_unlock(&lock);
         }
     }
@@ -42,12 +43,12 @@ void *thread_read_file(int remainder){
         if(count % NUM_OF_THREADS == remainder){
             pthread_mutex_lock(&lock);
             fscanf(fp, "%[^\n]\n", &line);
-            printf("Thread [%d] read paragraph %d\n", remainder, count);
+            printf("Thread [%d] read paragraph %d: %s\n", remainder, count, line);
             count++;
             pthread_mutex_unlock(&lock);
         }
     }
-    */
+*/
     close(fp);
     return NULL;
 }
