@@ -4,11 +4,13 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define FILE_NAME "task100.config"
+#define FILE_NAME "try.config"
 #define MAX_LEN 1500
 #define NUM_OF_THREADS 4
 int retrieved_number_of_paragraphs;
+int count=0;
 
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_once_t once_control = PTHREAD_ONCE_INIT;
 
 void get_number_from_first_line( void ){
@@ -19,22 +21,35 @@ void get_number_from_first_line( void ){
     retrieved_number_of_paragraphs = atoi(buffer);
 }
 
-void *thread_read_file(int n){
+void *thread_read_file(int remainder){
     FILE *fp = fopen(FILE_NAME, "r+");
     if (fp == NULL) perror("Cannot open file!");
 
     pthread_once(&once_control, get_number_from_first_line);
     char line[MAX_LEN];
     fgets(line, sizeof line, fp);
-    for(int i=0; i < retrieved_number_of_paragraphs - 1; i++){
-        if(i%NUM_OF_THREADS == n){
+
+    for(int i=0; i < retrieved_number_of_paragraphs; i++){
+        if(i%NUM_OF_THREADS == remainder){
+            pthread_mutex_lock(&lock);
             fscanf(fp, "%[^\n]\n", &line);
-            printf("Thread [%d] read paragraph %d\n", n, i);
-        }else{
-            fscanf(fp, "%[^\n]\n", &line);
+            printf("Thread [%d] read paragraph %d\n", remainder, i);
+            pthread_mutex_unlock(&lock);
         }
     }
+/*
+    while(count<retrieved_number_of_paragraphs){
+        if(count % NUM_OF_THREADS == remainder){
+            pthread_mutex_lock(&lock);
+            fscanf(fp, "%[^\n]\n", &line);
+            printf("Thread [%d] read paragraph %d\n", remainder, count);
+            count++;
+            pthread_mutex_unlock(&lock);
+        }
+    }
+    */
     close(fp);
+    return NULL;
 }
 
 int main() {
@@ -62,6 +77,8 @@ int main() {
         }
         pthread_join(tid2, NULL);
         pthread_join(&tid3, NULL);
+
     }
+    pthread_mutex_destroy(&lock);
     return 0;
 }
