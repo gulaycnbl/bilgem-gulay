@@ -1,3 +1,5 @@
+// Author: Gülay Canbaloğlu
+
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
