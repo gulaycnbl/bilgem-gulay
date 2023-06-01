@@ -1,5 +1,5 @@
 # bilgem-gulay
-My work specifically on the tests of the file system of the RTOS (GIS) in Tübitak Bilgem.
+My work specifically focusing on tests of the file system in Tübitak Bilgem.
 
 # Contributors
 
